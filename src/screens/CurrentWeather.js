@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import RowText from '../components/RowText'
+import { weatherType } from '../utilities/WeatherType'
 
 const CurrentWeather = () => {
   const { bodyWrapper, container, description, feels, highLow, highLowWrapper, message, temp, wrapper } = styles
@@ -13,7 +14,13 @@ const CurrentWeather = () => {
         <Text style={feels}>Feels like 6</Text>
         <RowText containerStyles={highLowWrapper} messageOne={'High: 9'} messageOneStyles={highLow} messageTwo={'Low: 7'} messageTwoStyles={highLow} />
       </View>
-      <RowText containerStyles={bodyWrapper} messageOne={'Description'} messageOneStyles={description} messageTwo={'Message'} messageTwoStyles={message} />
+      <RowText
+        containerStyles={bodyWrapper}
+        messageOne={'Description'}
+        messageOneStyles={description}
+        messageTwo={weatherType['Thunderstorm'].message}
+        messageTwoStyles={message}
+      />
     </SafeAreaView>
   )
 }
