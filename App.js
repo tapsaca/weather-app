@@ -3,27 +3,46 @@ import * as Location from 'expo-location'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Tabs from './src/components/Tabs'
+import { WEATHER_API_KEY } from '@env'
 
 const App = () => {
   const { container } = styles
   const [error, setError] = useState(null)
+  const [latitude, setLatitude] = useState([])
   const [loading, setLoading] = useState(true)
-  const [location, setLocation] = useState(null)
+  const [longitude, setLongitude] = useState([])
+  const [weather, setWeather] = useState([])
+
+  const fetchWeatherData = async () => {
+    try {
+      const response = await fetch(
+        `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}`
+      )
+      const data = await response.json()
+      setWeather(data)
+    } catch (e) {
+      setError('Could not fetch weather.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         setError('Permission to access location was denied.')
         return
       }
       let location = await Location.getCurrentPositionAsync()
-      setLocation(location)
+      setLatitude(location.coords.latitude)
+      setLongitude(location.coords.longitude)
+      await fetchWeatherData()
     })()
-  }, [])
+  }, [latitude, longitude])
 
-  if (location) {
-    console.log(location)
+  if (weather) {
+    console.log(weather)
   }
 
   if (loading) {
