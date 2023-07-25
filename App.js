@@ -7,20 +7,18 @@ const App = () => {
   const { container } = styles
   const [error, loading, weather] = useGetWeather()
 
-  console.log(error, loading, weather)
-
-  if (loading) {
+  if (weather && weather.list) {
     return (
-      <View style={container}>
-        <ActivityIndicator color={'blue'} size={'large'} />
-      </View>
+      <NavigationContainer>
+        <Tabs weather={weather} />
+      </NavigationContainer>
     )
   }
 
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    <View style={container}>
+      <ActivityIndicator color={'blue'} size={'large'} />
+    </View>
   )
 }
 
