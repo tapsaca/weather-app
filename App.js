@@ -8,7 +8,7 @@ const App = () => {
   const { container } = styles
   const [error, loading, weather] = useGetWeather()
 
-  if (weather && weather.list) {
+  if (weather && weather.list && !loading) {
     return (
       <NavigationContainer>
         <Tabs weather={weather} />
@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <View style={container}>
-      {loading ? <ActivityIndicator color={'blue'} size={'large'} /> : <ErrorItem />}
+      {error ? <ErrorItem /> : <ActivityIndicator color={'blue'} size={'large'} />}
     </View>
   )
 }

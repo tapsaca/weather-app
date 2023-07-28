@@ -8,7 +8,7 @@ const ListItem = ({ dt_txt, min, max, condition}) => {
 
   return (
     <View style={item}>
-      <Feather color={'black'} name={weatherType[condition].icon} size={50} />
+      <Feather color={'black'} name={weatherType[condition]?.icon} size={50} />
       <View style={dateTextWrapper}>
         <Text style={date}>{moment(dt_txt).format('dddd')}</Text>
         <Text style={date}>{moment(dt_txt).format('h:mm:ss a')}</Text>
